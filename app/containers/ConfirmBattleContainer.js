@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import ConfirmBattle from '../components/ConfirmBattle';
+import githubhelpers from '../utils/githubhelpers'
 
 const ConfirmBattleContainer = React.createClass({
 
@@ -12,17 +13,34 @@ const ConfirmBattleContainer = React.createClass({
     getInitialState() {
       return {
           isLoading: true,
-          playerInfo: []
+          playersInfo: []
       }
     },
     componentDidMount() {
       const query = this.props.location.query;
+      githubhelpers.getPlayersInfo([query.playerOne, query.playerTwo])
+            .then(function(players){
+               this.setState({
+                   isLoading:false,
+                   playersInfo: [players[0], players[1]]
+               })
+            }.bind(this))
+
+    },
+    handleInitiateBattle: function () {
+        this.context.router.push({
+            pathname: '/results',
+            state: {
+                playersInfo: this.state.playersInfo
+            }
+        })
     },
     render() {
         return(
             <ConfirmBattle
             isLoading={this.state.isLoading}
-            playersInfo={this.state.playerInfo}
+            onInitiateBattle={this.handleInitiateBattle}
+            playersInfo={this.state.playersInfo}
             />
         )
     }

@@ -3,19 +3,19 @@
  */
 
 import React from 'react';
-import {transparentBg} from '../styles'
 import {Link} from 'react-router'
+import MainContainer from '../components/MainContainer'
 
 const Home = () => ({
     render() {
         return(
-            <div className="jumbotron col-sm-12 text-center" style={transparentBg}>
+            <MainContainer>
                 <h1>Github battle</h1>
-                <p className="lead"> some fancy motto</p>
+                <p className="lead"> Be the Github champion!</p>
                 <Link to="/playerOne">
                 <button type="button" className="btn btn-lg btn-success">Get Started</button>
                 </Link>
-            </div>
+            </MainContainer>
         )
     }
 })
